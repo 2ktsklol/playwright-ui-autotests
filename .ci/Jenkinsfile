@@ -15,16 +15,16 @@ pipeline {
     //     '''
     //   }
     // }
-    post {
-      success{
-        mail to: '2ktsklol@gmail.com'
-        subject: "${currentBuild.currentResult}: Job  ${env.JOB_NAME} (Build ${env.BUILD_NUMBER})"
-        body: "УСПЕХ"
-      }
-      always {
-        script {
-          cleanWs()
-        }
+  }
+  post {
+    success {
+      mail to: '2ktsklol@gmail.com'
+      subject: "${currentBuild.currentResult}: Job  ${env.JOB_NAME} (Build ${env.BUILD_NUMBER})"
+      body: "УСПЕХ"
+    }
+    always {
+      script {
+        cleanWs()
       }
     }
   }
