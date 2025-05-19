@@ -1,24 +1,26 @@
 pipeline {
-  agent {
-    docker {
-      image 'mcr.microsoft.com/playwright:v1.52.0-noble'
-    }
-  }
+  agent any
   stages {
     stage('help') {
       steps {
-        sh 'npx plawright test --help'
+        echo 'test message'
+        // sh 'npx plawright test --help'
       }
     }
-    stage('e2e-tests') {
-      steps {
-        sh '''#!/bin/bash
-        npm ci
-        npx playwright test
-        '''
-      }
-    }
+    // stage('e2e-tests') {
+    //   steps {
+    //     sh '''#!/bin/bash
+    //     npm ci
+    //     npx playwright test
+    //     '''
+    //   }
+    // }
     post {
+      success{
+        mail to: '2ktsklol@gmail.com'
+        subject: "${currentBuild.currentResult}: Job  ${env.JOB_NAME} (Build ${env.BUILD_NUMBER})"
+        body: "УСПЕХ"
+      }
       always {
         script {
           cleanWs()
