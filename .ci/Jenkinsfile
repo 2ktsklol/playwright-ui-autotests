@@ -1,20 +1,20 @@
 pipeline {
-  agent any
+  agent { docker { image 'mcr.microsoft.com/playwright:v1.52.0-noble' } }
   stages {
     stage('help') {
       steps {
         echo 'test message'
-        // sh 'npx playwright test --help'
+        sh 'npx playwright test --help'
       }
     }
-    // stage('e2e-tests') {
-    //   steps {
-    //     sh '''#!/bin/bash
-    //     npm ci
-    //     npx playwright test
-    //     '''
-    //   }
-    // }
+    stage('e2e-tests') {
+      steps {
+        sh '''#!/bin/bash
+        npm ci
+        npx playwright test
+        '''
+      }
+    }
   }
   // post {
   //   success {
