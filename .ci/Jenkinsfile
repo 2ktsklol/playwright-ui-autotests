@@ -1,18 +1,27 @@
 pipeline {
-  agent { docker { image 'mcr.microsoft.com/playwright:v1.52.0-noble' } }
+  agent none  // Declare no global agent
   stages {
     stage('help') {
+      agent { docker { image 'mcr.microsoft.com/playwright:v1.52.0-noble' } }
       steps {
         echo 'test message'
         sh 'npx playwright test --help'
       }
     }
     stage('e2e-tests') {
+      agent { docker { image 'mcr.microsoft.com/playwright:v1.52.0-noble' } }
       steps {
         sh '''#!/bin/bash
         npm ci
         npx playwright test
         '''
+      }
+    }
+  }
+  post {
+    always {
+      node {
+        cleanWs()
       }
     }
   }
